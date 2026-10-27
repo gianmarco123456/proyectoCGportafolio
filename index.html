@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portafolio Interactivo 3D — Driving World (WebGL 2.0)</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <!-- Lienzo principal WebGL 2.0 -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Capa de Interfaz Overlay (HUD + Tarjeta Emergente de Estaciones) -->
+    <div id="ui-layer">
+        <!-- Encabezado superior izquierdo -->
+        <header class="hud-header glass-panel">
+            <div class="badge-engine">WEBGL 2.0 • GLSL ES 3.00 • NATIVE ENGINE</div>
+            <h1>Portafolio 3D Interactivo</h1>
+            <p>Conduce hasta las estaciones luminosas para explorar mis proyectos y redes.</p>
+        </header>
+
+        <!-- Minimapa y Telemetría superior derecha -->
+        <aside class="hud-telemetry glass-panel">
+            <canvas id="minimap-canvas" width="140" height="140"></canvas>
+            <div class="telemetry-stats">
+                <div class="speedometer">
+                    <span id="speed-value">00</span>
+                    <small>KM/H</small>
+                </div>
+                <div id="coords-value" class="coords-text">X: 0 | Z: 0</div>
+            </div>
+        </aside>
+
+        <!-- Tarjeta emergente cuando el carrito se aproxima a una caja (GitHub, LinkedIn, etc.) -->
+        <section id="station-popup" class="station-card glass-panel hidden" aria-live="polite">
+            <div class="station-card-header">
+                <span id="popup-category" class="station-category">CATEGORÍA</span>
+                <span id="popup-distance" class="station-distance">Distancia: 0.0m</span>
+            </div>
+            <h2 id="popup-title">Nombre de la Estación</h2>
+            <p id="popup-desc">Descripción de la estación interactiva.</p>
+            <div class="station-actions">
+                <a id="popup-link" href="#" target="_blank" rel="noopener noreferrer" class="btn-station">
+                    Abrir Enlace ↗
+                </a>
+                <span class="shortcut-hint">o presiona <kbd>Enter</kbd> / <kbd>E</kbd></span>
+            </div>
+        </section>
+
+        <!-- HUD inferior discreto con instrucciones de manejo -->
+        <footer class="hud-controls glass-panel">
+            <div class="control-group">
+                <span class="key-badge">W</span>
+                <span class="key-badge">A</span>
+                <span class="key-badge">S</span>
+                <span class="key-badge">D</span>
+                <span class="control-label">o <strong>Flechas</strong> para conducir</span>
+            </div>
+            <div class="control-divider"></div>
+            <div class="control-group">
+                <span class="key-badge">Shift</span>
+                <span class="control-label">Turbo</span>
+            </div>
+            <div class="control-divider"></div>
+            <div class="control-group">
+                <span class="key-badge">R</span>
+                <span class="control-label">Reiniciar auto</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Punto de entrada modular ES6 nativo -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

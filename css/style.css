@@ -1,0 +1,297 @@
+:root {
+    --bg-dark: #0d0d1f;
+    --glass-bg: rgba(14, 18, 38, 0.76);
+    --glass-border: rgba(0, 240, 255, 0.28);
+    --neon-cyan: #00f0ff;
+    --neon-pink: #ff2975;
+    --text-main: #f4f7ff;
+    --text-muted: #9aa7c7;
+    --station-accent: #00f0ff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--bg-dark);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    color: var(--text-main);
+    user-select: none;
+}
+
+#webgl-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    z-index: 1;
+}
+
+#ui-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 240, 255, 0.08);
+}
+
+/* Header Superior Izquierdo */
+.hud-header {
+    max-width: 380px;
+    padding: 1rem 1.25rem;
+    align-self: flex-start;
+}
+
+.badge-engine {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.12);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    margin-bottom: 0.45rem;
+}
+
+.hud-header h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+}
+
+.hud-header p {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Telemetría y Minimapa Superior Derecho */
+.hud-telemetry {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.5rem;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+#minimap-canvas {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    display: block;
+}
+
+.telemetry-stats {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 0.25rem;
+}
+
+.speedometer {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+#speed-value {
+    font-size: 1.35rem;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--neon-cyan);
+}
+
+.speedometer small {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.coords-text {
+    font-size: 0.72rem;
+    font-family: monospace;
+    color: var(--text-muted);
+}
+
+/* Tarjeta Emergente de Estación (Redes Sociales y Proyectos) */
+.station-card {
+    pointer-events: auto;
+    align-self: center;
+    max-width: 440px;
+    width: calc(100% - 2rem);
+    padding: 1.35rem 1.5rem;
+    border-color: var(--station-accent);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 28px color-mix(in srgb, var(--station-accent) 28%, transparent);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.station-card.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(18px) scale(0.96);
+}
+
+.station-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.45rem;
+}
+
+.station-category {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--station-accent);
+}
+
+.station-distance {
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: var(--text-muted);
+}
+
+.station-card h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.station-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    margin-bottom: 1.1rem;
+}
+
+.station-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.btn-station {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    background: var(--station-accent);
+    color: #070913;
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-station:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.12);
+}
+
+.shortcut-hint {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.shortcut-hint kbd {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    padding: 0.12rem 0.4rem;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: #fff;
+}
+
+/* HUD Inferior de Controles */
+.hud-controls {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.65rem 1.2rem;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.key-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.65rem;
+    height: 1.65rem;
+    padding: 0 0.4rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--neon-cyan);
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    border-radius: 6px;
+}
+
+.control-label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-left: 0.25rem;
+}
+
+.control-label strong {
+    color: var(--text-main);
+}
+
+.control-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 720px) {
+    .hud-header {
+        max-width: 240px;
+        padding: 0.75rem 0.9rem;
+    }
+    .hud-header h1 {
+        font-size: 1rem;
+    }
+    .hud-header p {
+        display: none;
+    }
+}
